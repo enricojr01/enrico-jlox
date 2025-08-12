@@ -78,12 +78,19 @@ public class Parser {
 
         Stmt body = statement();
 
+        // de-sugaring.
         if (increment != null) {
-            body = new Stmt.Block(Arrays.asList(body, new Stmt.Expression(increment)));
+            body = new Stmt.Block(
+                    Arrays.asList(
+                            body,
+                            new Stmt.Expression(increment)
+                    )
+            );
         }
 
-        // de-sugaring.
-        if (condition == null) condition = new Expr.Literal(true);
+        if (condition == null) {
+            condition = new Expr.Literal(true);
+        }
 
         body = new Stmt.While(condition, body);
 

@@ -1,0 +1,5 @@
+var a = [];
+append(a, 1);
+append(a, 2);
+append(a, 3);
+print a; // expect: [1, 2, 3]

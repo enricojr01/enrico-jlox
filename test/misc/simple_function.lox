@@ -1,0 +1,5 @@
+fun greet() {
+	print "hello world";
+}
+print "This is a small test of function calling.";
+greet();

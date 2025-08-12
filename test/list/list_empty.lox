@@ -1,0 +1,3 @@
+var empty = [];
+
+print empty; // expect: []

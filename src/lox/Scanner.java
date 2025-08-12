@@ -64,7 +64,7 @@ class Scanner {
             case '-': addToken(MINUS); break;
             case '+': addToken(PLUS); break;
             case ';': addToken(SEMICOLON); break;
-            case '*': addToken(SEMICOLON); break;
+            case '*': addToken(STAR); break;
 
             // double character tokens
             case '!':

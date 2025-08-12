@@ -1,0 +1,9 @@
+fun someList() {
+	var a = [1, 2, 3, 4, 5];
+	fun inner() {
+		print a;
+	}
+	inner();
+}
+
+someList(); // expect: [1, 2, 3, 4, 5]

@@ -5,6 +5,7 @@ import java.util.List;
 abstract class Stmt {
     interface Visitor<R> {
         R visitBlockStmt(Block stmt);
+        R visitClassStmt(Class stmt);
         R visitFunctionStmt(Function stmt);
         R visitIfStmt(If stmt);
         R visitExpressionStmt(Expression stmt);
@@ -24,6 +25,20 @@ abstract class Stmt {
         }
 
         final List<Stmt> statements;
+    }
+    static class Class extends Stmt {
+        Class(Token name, List<Stmt.Function> functions) {
+        this.name = name;
+        this.functions = functions;
+        }
+
+        @Override
+        <R> R accept(Visitor<R> visitor) {
+            return visitor.visitClassStmt(this);
+        }
+
+        final Token name;
+        final List<Stmt.Function> functions;
     }
     static class Function extends Stmt {
         Function(Token name, List<Token> params, List<Stmt> body) {

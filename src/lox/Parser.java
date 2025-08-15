@@ -32,6 +32,9 @@ public class Parser {
 
     private Stmt declaration() {
         try {
+            if (match(CLASS)) {
+                return classDeclaration();
+            }
             if (match(FUN)) {
                 return function("function");
             }
@@ -136,18 +139,6 @@ public class Parser {
         return new Stmt.Return(keyword, value);
     }
 
-    private Stmt varDeclaration() {
-        Token name = consume(IDENTIFIER, "Expect variable name.");
-
-        Expr initializer = null;
-        if (match(EQUAL)) {
-            initializer = expression();
-        }
-
-        consume(SEMICOLON, "Expect ';' after variable declaration.");
-        return new Stmt.Var(name, initializer);
-    }
-
     private Stmt whileStatement() {
         consume(LEFT_PAREN, "Expect '(' after 'while'.");
         Expr condition = expression();
@@ -185,6 +176,32 @@ public class Parser {
 
         return new Stmt.Function(name, parameters, body);
     }
+
+    private Stmt varDeclaration() {
+        Token name = consume(IDENTIFIER, "Expect variable name.");
+
+        Expr initializer = null;
+        if (match(EQUAL)) {
+            initializer = expression();
+        }
+
+        consume(SEMICOLON, "Expect ';' after variable declaration.");
+        return new Stmt.Var(name, initializer);
+    }
+
+    private Stmt classDeclaration() {
+        Token name = consume(IDENTIFIER, "Expect class name.");
+        consume(LEFT_BRACE, "Expect '{' before class body.");
+
+        List<Stmt.Function> methods = new ArrayList<>();
+        while(!check(RIGHT_BRACE) && !isAtEnd()) {
+            methods.add(function("method"));
+        }
+
+        consume(RIGHT_BRACE, "Expect '}' after class body.");
+        return new Stmt.Class(name, methods);
+    }
+
 
     private List<Stmt> block() {
         List<Stmt> statements = new ArrayList<>();

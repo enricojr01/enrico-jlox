@@ -27,9 +27,9 @@ abstract class Stmt {
         final List<Stmt> statements;
     }
     static class Class extends Stmt {
-        Class(Token name, List<Stmt.Function> functions) {
+        Class(Token name, List<Stmt.Function> methods) {
         this.name = name;
-        this.functions = functions;
+        this.methods = methods;
         }
 
         @Override
@@ -38,7 +38,7 @@ abstract class Stmt {
         }
 
         final Token name;
-        final List<Stmt.Function> functions;
+        final List<Stmt.Function> methods;
     }
     static class Function extends Stmt {
         Function(Token name, List<Token> params, List<Stmt> body) {
